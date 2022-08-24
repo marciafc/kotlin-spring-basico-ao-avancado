@@ -1,11 +1,46 @@
 # Kotlin e Spring do ZERO ao Avançado
 
-  - Extension function
+  - Extension function - ConverterExtensionFunction.kt
   
     - PostCustomerRequest.toCustomerModel()
     - PutCustomerRequest.toCustomerModel
     
+  - Flyway
+    - [https://flywaydb.org/documentation/concepts/migrations#versioned-migrations](https://flywaydb.org/documentation/concepts/migrations#versioned-migrations)
+  
+    - Incluir dependência
+    
+    - Incluir migrations: resources/db.migration
+      - Seguir padrão no começo do nome do arquivo (V1__, V2__, etc...)
+      - Ex.: V1__create_table_customer
       
+  - ERRO 'No default constructor for entity:  : br.com.marcia.mercadolivro.model.CustomerModel'
+  
+    - Incluir plugin:
+    
+      ```id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'``` 
+      
+    - ou plugin
+    
+      ```kotlin("plugin.jpa") version "1.4.30"```   
+      
+  - Plugins no build.gradle.kts: formas de incluir plugin do **KOTLIN**:
+  
+```
+id("org.springframework.boot") version "2.4.3"
+id("io.spring.dependency-management") version "1.0.11.RELEASE"
+kotlin("jvm") version "1.4.30"
+kotlin("plugin.spring") version "1.4.30"
+kotlin("plugin.jpa") version "1.4.30"     
+```
+
+```
+id 'org.springframework.boot' version '2.4.3'
+id 'io.spring.dependency-management' version '1.0.11.RELEASE'	        	
+id 'org.jetbrains.kotlin.jvm' version '1.4.32'
+id 'org.jetbrains.kotlin.plugin.spring' version '1.4.32'
+id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
+```
 
 ## Referências
 

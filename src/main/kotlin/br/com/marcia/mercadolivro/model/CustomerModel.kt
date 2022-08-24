@@ -1,9 +1,17 @@
-package com.mercadolivro.model
+package br.com.marcia.mercadolivro.model
 
-data class CustomerModel(
-    var id: String? = null,
+import javax.persistence.*
 
-    var name: String,
+@Entity(name = "customer")
+data class CustomerModel (
 
-    var email: String
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        var id: Int? = null,
+
+        @Column
+        var name: String,
+
+        @Column
+        var email: String
 )

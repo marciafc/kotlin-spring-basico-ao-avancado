@@ -1,10 +1,10 @@
 package br.com.marcia.mercadolivro.controller
 
-import br.com.marcia.extension.toCustomerModel
+import br.com.marcia.mercadolivro.extension.toCustomerModel
 import br.com.marcia.mercadolivro.controller.request.PostCustomerRequest
 import br.com.marcia.mercadolivro.controller.request.PutCustomerRequest
 import br.com.marcia.mercadolivro.service.CustomerService
-import com.mercadolivro.model.CustomerModel
+import br.com.marcia.mercadolivro.model.CustomerModel
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -29,19 +29,19 @@ class CustomerController (
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: String): CustomerModel {
+    fun getCustomer(@PathVariable id: Int): CustomerModel {
         return customerService.getCustomer(id)
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: String, @RequestBody customer: PutCustomerRequest) {
+    fun update(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest) {
         customerService.update(customer.toCustomerModel(id))
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: String) {
+    fun delete(@PathVariable id: Int) {
         customerService.delete(id)
     }
 }
