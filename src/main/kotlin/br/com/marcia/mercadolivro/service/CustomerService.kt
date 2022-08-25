@@ -55,13 +55,16 @@ class CustomerService(
         customers.add(CustomerModel(id, customer.name, customer.email))
     }*/
 
-    fun getCustomer(id: Int): CustomerModel {
+    fun getById(id: Int): CustomerModel {
+        return customerRepository.findById(id).orElseThrow()
+    }
+    /*fun getCustomer(id: Int): CustomerModel {
         // return customers.filter { it.id == id }.first()
 
         // Ou retorna um Optional de CustomerModel
         // Ou orElseThrow -> se nao encontrar o registro, lança exceção
         return customerRepository.findById(id).orElseThrow()
-    }
+    }*/
 
     fun update(customer: CustomerModel) {
         /*customers.filter { it.id == customer.id }.first().let {
