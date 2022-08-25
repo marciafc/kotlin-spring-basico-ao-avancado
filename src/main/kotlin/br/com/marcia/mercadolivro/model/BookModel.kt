@@ -17,12 +17,40 @@ data class BookModel(
     @Column
     var price: BigDecimal,
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    var status: BookStatus? = null,
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     var customer: CustomerModel? = null
 
-)
+) {
+
+
+    // Como sobrescrever um método set?
+    // Ao subscrever o setStatus, validamos ANTES se essa alteração é permitida
+    @Column
+    @Enumerated(EnumType.STRING)
+    var status: BookStatus? = null
+
+        // value -> novo valor
+        // field -> valor atual do atributo
+        set(value) {
+            if(field == BookStatus.CANCELADO || field == BookStatus.DELETADO) {
+                throw Exception("Não é possível alterar um livro com status ${field}")
+            }
+
+            field = value
+        }
+
+    // Necessário criar um construtor contendo o 'status' -> usar 'constructor'
+    // Isso porque o 'status' foi removido do construtor de cima
+    // Onde tem this(id, name, price, customer) -> está invocando o construtor de cima
+    constructor(id: Int? = null,
+                name: String,
+                price: BigDecimal,
+                customer: CustomerModel? = null,
+                status: BookStatus?): this(id, name, price, customer) {
+
+        // seta 'status' -> só existe nesse construtor, não tem no construtor de cima
+        this.status = status
+    }
+
+}

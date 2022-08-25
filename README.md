@@ -42,6 +42,11 @@ id 'org.jetbrains.kotlin.plugin.spring' version '1.4.32'
 id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
 ```
 
+  - Como sobrescrever um método set
+  
+    - BookModel.kt
+    
+    
 ## Referências
 
   - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
