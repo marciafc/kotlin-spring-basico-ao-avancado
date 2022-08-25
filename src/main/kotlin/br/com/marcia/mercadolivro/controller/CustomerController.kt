@@ -15,8 +15,8 @@ class CustomerController (
         val customerService : CustomerService
 ) {
 
-    // RequestParam ou QueryParameter opcional
-    //   @RequestParam name: String?  -> usar o ponto de interrogação no parâmetro
+    // RequestParam OU QueryParameter
+    // @RequestParam name: String?  -> usar o ponto de interrogação no parâmetro (fica opcional)
     @GetMapping
     fun getAll(@RequestParam name: String?): List<CustomerModel> {
         return customerService.getAll(name)
@@ -36,7 +36,8 @@ class CustomerController (
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun update(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest) {
-        customerService.update(customer.toCustomerModel(id))
+        val customerSaved = customerService.findById(id)
+        customerService.update(customer.toCustomerModel(customerSaved))
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,6 @@
 package br.com.marcia.mercadolivro.service
 
+import br.com.marcia.mercadolivro.enums.CustomerStatus
 import br.com.marcia.mercadolivro.model.CustomerModel
 import br.com.marcia.mercadolivro.repository.CustomerRepository
 import org.springframework.stereotype.Service
@@ -87,10 +88,12 @@ class CustomerService(
             throw Exception()
         }*/
 
-        var customer = findById(id)
-
+        val customer = findById(id)
         bookService.deleteByCustomer(customer)
-        customerRepository.deleteById(id)
+
+        customer.status = CustomerStatus.INATIVO
+
+        customerRepository.save(customer)
     }
 
 }
