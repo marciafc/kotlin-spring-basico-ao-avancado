@@ -46,6 +46,12 @@ id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
   
     - BookModel.kt
     
+  - Paginação
+  
+    - 2 formas: BookRepository.kt    
+    - BookController.kt
+      - @PageableDefault
+    
     
 ## Referências
 

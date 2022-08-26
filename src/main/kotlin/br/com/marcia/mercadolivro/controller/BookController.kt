@@ -7,6 +7,9 @@ import br.com.marcia.mercadolivro.extension.toBookModel
 import br.com.marcia.mercadolivro.extension.toResponse
 import br.com.marcia.mercadolivro.service.BookService
 import br.com.marcia.mercadolivro.service.CustomerService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -25,18 +28,18 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(): List<BookResponse> {
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
 
         // .map { it.toResponse()  -> itera em todos os itens e converte em BookResponse,
         // usando o ConverterExtensionFunction.kt
-        return bookService.findAll().map { it.toResponse() }
+        return bookService.findAll(pageable).map { it.toResponse() }
     }
 
     // Quando tem só uma linha,
     // não precisa usar return, usa só símbolo de igual
     @GetMapping("/active")
-    fun findActives(): List<BookResponse> =
-            bookService.findActives().map { it.toResponse() }
+    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
+            bookService.findActives(pageable).map { it.toResponse() }
 
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Int): BookResponse {
