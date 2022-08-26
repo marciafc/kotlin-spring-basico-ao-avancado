@@ -3,8 +3,9 @@ package br.com.marcia.mercadolivro.controller
 import br.com.marcia.mercadolivro.extension.toCustomerModel
 import br.com.marcia.mercadolivro.controller.request.PostCustomerRequest
 import br.com.marcia.mercadolivro.controller.request.PutCustomerRequest
+import br.com.marcia.mercadolivro.controller.response.CustomerResponse
+import br.com.marcia.mercadolivro.extension.toResponse
 import br.com.marcia.mercadolivro.service.CustomerService
-import br.com.marcia.mercadolivro.model.CustomerModel
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -18,8 +19,11 @@ class CustomerController (
     // RequestParam OU QueryParameter
     // @RequestParam name: String?  -> usar o ponto de interrogação no parâmetro (fica opcional)
     @GetMapping
-    fun getAll(@RequestParam name: String?): List<CustomerModel> {
-        return customerService.getAll(name)
+    fun getAll(@RequestParam name: String?): List<CustomerResponse> {
+
+        // .map { it.toResponse()  -> itera em todos os itens e converte em CustomerResponse,
+        // usando o ConverterExtensionFunction.kt
+        return customerService.getAll(name).map { it.toResponse() }
     }
 
     @PostMapping
@@ -29,8 +33,8 @@ class CustomerController (
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): CustomerModel {
-        return customerService.findById(id)
+    fun getCustomer(@PathVariable id: Int): CustomerResponse {
+        return customerService.findById(id).toResponse()
     }
 
     @PutMapping("/{id}")

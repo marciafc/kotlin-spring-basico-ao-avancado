@@ -2,8 +2,9 @@ package br.com.marcia.mercadolivro.controller
 
 import br.com.marcia.mercadolivro.controller.request.PostBookRequest
 import br.com.marcia.mercadolivro.controller.request.PutBookRequest
+import br.com.marcia.mercadolivro.controller.response.BookResponse
 import br.com.marcia.mercadolivro.extension.toBookModel
-import br.com.marcia.mercadolivro.model.BookModel
+import br.com.marcia.mercadolivro.extension.toResponse
 import br.com.marcia.mercadolivro.service.BookService
 import br.com.marcia.mercadolivro.service.CustomerService
 import org.springframework.http.HttpStatus
@@ -24,19 +25,22 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(): List<BookModel> {
-        return bookService.findAll()
+    fun findAll(): List<BookResponse> {
+
+        // .map { it.toResponse()  -> itera em todos os itens e converte em BookResponse,
+        // usando o ConverterExtensionFunction.kt
+        return bookService.findAll().map { it.toResponse() }
     }
 
     // Quando tem só uma linha,
     // não precisa usar return, usa só símbolo de igual
     @GetMapping("/active")
-    fun findActives(): List<BookModel> =
-            bookService.findActives()
+    fun findActives(): List<BookResponse> =
+            bookService.findActives().map { it.toResponse() }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Int): BookModel {
-        return bookService.findById(id)
+    fun findById(@PathVariable id: Int): BookResponse {
+        return bookService.findById(id).toResponse()
     }
 
     @DeleteMapping("/{id}")
