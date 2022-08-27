@@ -62,6 +62,18 @@ id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
     - @field:NotEmpty
     - @field:Email    
     
+  - Criar annotation
+  
+    - EmailAvailable.kt -> é uma annotation que valida
+      - Informar quem vai fazer a validação em @Constraint
+      
+    - PostCustomerRequest.kt  -> usando a annotation com @EmailAvailable
+  
+  - Criar validador customizado 
+  
+    - EmailAvailableValidator.kt   
+    
+    
 ## Referências
 
   - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
