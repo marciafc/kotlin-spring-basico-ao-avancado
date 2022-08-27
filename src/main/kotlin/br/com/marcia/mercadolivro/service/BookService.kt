@@ -1,6 +1,7 @@
 package br.com.marcia.mercadolivro.service
 
 import br.com.marcia.mercadolivro.enums.BookStatus
+import br.com.marcia.mercadolivro.enums.Errors
 import br.com.marcia.mercadolivro.exception.NotFoundException
 import br.com.marcia.mercadolivro.model.BookModel
 import br.com.marcia.mercadolivro.model.CustomerModel
@@ -29,7 +30,7 @@ class BookService(
     fun findById(id: Int): BookModel {
         // orElseThrow -> caso não encontre o id, lança exceção
         // ML -> MercadoLivro: erro específico do sistema para facilitar o tracking
-        return bookRepository.findById(id).orElseThrow{ NotFoundException("Book [${id}] not exists", "ML-0001") }
+        return bookRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML101.message.format(id), Errors.ML101.code) }
     }
 
     fun delete(id: Int) {
