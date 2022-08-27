@@ -73,6 +73,10 @@ id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
   
     - EmailAvailableValidator.kt   
     
+  - Swagger
+  
+    - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)   
+    
     
 ## Referências
 
