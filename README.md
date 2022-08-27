@@ -56,6 +56,11 @@ id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
   
     - application.yml -> default-property-inclusion: non_null    
     
+  - Validações - Spring Validator
+  
+    - @Valid -> Controller
+    - @field:NotEmpty
+    - @field:Email    
     
 ## Referências
 
