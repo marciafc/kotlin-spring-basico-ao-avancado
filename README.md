@@ -77,7 +77,39 @@ id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
   
     - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)   
     
+  - Eventos do Spring
+  
+    - PurchaseController.kt
     
+      - Usará outro tipo de **padrão de parser**, um **Mapper**. Nos demais controllers está sendo utilizado **Extension Function** :)
+      
+        - PurchaseMapper.kt: Mapper é uma outra alternativa de parser.
+        - A injeção do BookService e CustomerService ficou no Mapper e não no controller.
+        - Não precisa criar uma Extension Function, é uma classe especializada em criar o objeto esperado.
+        
+      - Disparando **evento** -> **Publisher**
+      
+        - PurchaseService.kt: dispara evento de compra
+          - create \ applicationEventPublisher.publishEvent  
+        
+      - Ouvindo **evento** -> **Listener**
+      
+        - Tornar listener assíncrono -> ```@Async``` no método do listener + ```@EnableAsync``` na classe que sobe a aplicação (MercadoLivroApplication.kt)
+        
+        - Dizer que é vai ouvir um evento, que é um listener -> ```@EventListener```
+          ```
+          @Async
+          @EventListener
+          fun listen(purchaseEvent: PurchaseEvent) {
+          ```
+        - GenerateNfeListener.kt: ouve evento de compra e gera a nf
+        
+        - UpdateSoldBookListener.kt: ouve evento de compra e atualiza status dos livros (para VENDIDO)
+        
+      - TODO: não permitir vender um livro cujo status é VENDIDO, validar antes se o livro está disponível para a venda
+      
+      - TODO: criar endpoint que retorna os livros que o customer comprou e outro endpoint com os que ele vendeu
+      
 ## Referências
 
   - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
