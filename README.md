@@ -110,6 +110,17 @@ id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
       
       - TODO: criar endpoint que retorna os livros que o customer comprou e outro endpoint com os que ele vendeu
       
+  - Spring Security
+  
+    - JWT (JSON Web Token)
+    
+    - [https://jwt.io](https://jwt.io/)
+    
+    - sub: identificação do usuário, id por exemplo
+    
+    - iat: até quando o token é válido
+    
+        
 ## Referências
 
   - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
