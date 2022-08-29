@@ -112,6 +112,8 @@ id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
       
   - Spring Security
   
+    - Ao adicionar a dependência do Spring Security todas as rotas ficarão "bloqueadas" - 401 Unauthorized
+  
     - JWT (JSON Web Token)
     
     - [https://jwt.io](https://jwt.io/)
