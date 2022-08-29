@@ -6,12 +6,14 @@ import br.com.marcia.mercadolivro.enums.Profile
 import br.com.marcia.mercadolivro.exception.NotFoundException
 import br.com.marcia.mercadolivro.model.CustomerModel
 import br.com.marcia.mercadolivro.repository.CustomerRepository
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(
         val customerRepository: CustomerRepository,
-        val bookService: BookService
+        val bookService: BookService,
+        private val bCrypt: BCryptPasswordEncoder
 ) {
 
     // val customers = mutableListOf<CustomerModel>()
@@ -43,7 +45,8 @@ class CustomerService(
         // customer.copy -> Copiar o customer recebido como argumento para
         //  preenchê-lo com a role de CUSTOMER antes de salvar
         val customerCopy = customer.copy(
-                roles = setOf(Profile.CUSTOMER)
+                roles = setOf(Profile.CUSTOMER),
+                password = bCrypt.encode(customer.password)
         )
         customerRepository.save(customerCopy)
     }
