@@ -51,7 +51,7 @@ class AuthorizationFilter(
 
         // Principal é o subject do customer
         // customer.authorities -> roles do customer
-        return UsernamePasswordAuthenticationToken(subject, null, customer.authorities)
+        return UsernamePasswordAuthenticationToken(customer, null, customer.authorities)
     }
 
 }

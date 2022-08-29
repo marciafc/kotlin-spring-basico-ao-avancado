@@ -5,8 +5,10 @@ import br.com.marcia.mercadolivro.controller.request.PostCustomerRequest
 import br.com.marcia.mercadolivro.controller.request.PutCustomerRequest
 import br.com.marcia.mercadolivro.controller.response.CustomerResponse
 import br.com.marcia.mercadolivro.extension.toResponse
+import br.com.marcia.mercadolivro.security.UserCanOnlyAccessTheirOwnResource
 import br.com.marcia.mercadolivro.service.CustomerService
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -34,6 +36,11 @@ class CustomerController (
     }
 
     @GetMapping("/{id}")
+    // Somente ADMIN e o próprio costumer "dono" do recurso podem acessar
+    //   @PreAuthorize("hasRole('ROLE_ADMIN') || #id == authentication.principal.id")
+    //   Ex1.: logado com costumer_id = 16 e é ADMIN, poderá acessar /customers/16  e  /customers/1
+    //   Ex2.: logado com costumer_id = 16 é CUSTOMER somente, poderá acessar /customers/16 SOMENTE
+    @UserCanOnlyAccessTheirOwnResource // Essa annotation substitui a expressão @PreAuthorize
     fun getCustomer(@PathVariable id: Int): CustomerResponse {
         return customerService.findById(id).toResponse()
     }
