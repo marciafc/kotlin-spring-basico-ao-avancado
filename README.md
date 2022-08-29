@@ -122,6 +122,8 @@ class CustomerService(
       
   - Spring Security
   
+    - Arquivos: **SecurityConfig.kt** e package **security**
+  
     - Ao adicionar a dependência do Spring Security todas as rotas ficarão "bloqueadas" - 401 Unauthorized
     
     - Spring cria uma rota POST /login
@@ -149,6 +151,10 @@ class CustomerService(
     - sub: identificação do usuário, id por exemplo
     
     - iat: até quando o token é válido
+    
+    - Configurar as **roles do usuário**: tabela customer_roles
+      - INSERT INTO mercadolivro.customer_roles(customer_id, `role`) VALUES(<INSERIR_ID>, 'CUSTOMER')
+      - INSERT INTO mercadolivro.customer_roles(customer_id, `role`) VALUES(<INSERIR_ID>, 'ADMIN')
     
         
 ## Referências
