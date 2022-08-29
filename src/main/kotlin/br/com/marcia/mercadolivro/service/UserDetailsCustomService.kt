@@ -14,6 +14,7 @@ class UserDetailsCustomService(
 ): UserDetailsService {
 
     // Sobrescrever o método que carrega o usuário baseado em seu identificador (nessa app está usando id e não o email)
+    // loadUserByUsername -> método que deve ser realizado override
     override fun loadUserByUsername(id: String): UserDetails {
 
         val customer = customerRepository.findById(id.toInt())

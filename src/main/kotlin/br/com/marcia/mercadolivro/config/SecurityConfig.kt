@@ -2,6 +2,7 @@ package br.com.marcia.mercadolivro.config
 
 import br.com.marcia.mercadolivro.repository.CustomerRepository
 import br.com.marcia.mercadolivro.security.AuthenticationFilter
+import br.com.marcia.mercadolivro.security.AuthorizationFilter
 import br.com.marcia.mercadolivro.security.JwtUtil
 import br.com.marcia.mercadolivro.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
@@ -52,6 +53,9 @@ class SecurityConfig(
 
         // Indicar ao Spring como realizar a autenticação
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
+
+        // Indicar ao Spring como realizar a autorização
+        http.addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }

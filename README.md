@@ -135,9 +135,16 @@ class CustomerService(
       - Gerar jwt.secret do application.yml -> [https://www.uuidgenerator.net/](https://www.uuidgenerator.net/)
       
       - Validar token JWT
-        - Após chamar rota POST /login, copiar do header Authorization (exemplo Bearer eyJhbGciOiJIUzUx...)
-        - Colar no site https://jwt.io tudo sem 'Bearer ' e onde diz 'your-256-bit-secret' colar o jwt.secret do application.yml
-          - Se ok, irá mudar para 'Signature Verified'
+      
+        - Após chamar rota **POST /login**, copiar do response Header Authorization (exemplo Bearer eyJhbGciOiJIUzUx...)
+        - Colar no site https://jwt.io tudo sem o texto 'Bearer ' e onde diz 'your-256-bit-secret', colar o jwt.secret do application.yml
+          - Se ok, irá mudar para **'Signature Verified'**
+          
+      - Acessar endpoints com token JWT   
+      
+        - Realizar login na rota **POST /login**
+        - Copiar **token do Header** de resposta 'Authorization' (exemplo Bearer eyJhbGciOiJIUzUxM..)
+        - Colar esse token no endpoint que quer acessar (no **Header de request 'Authorization'**) e fazer a requisição. OU ainda na **aba Authorization** do POSTMAN sem texto 'Bearer '
     
     - sub: identificação do usuário, id por exemplo
     
