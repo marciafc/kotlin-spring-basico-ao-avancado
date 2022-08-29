@@ -42,6 +42,16 @@ id 'org.jetbrains.kotlin.plugin.spring' version '1.4.32'
 id 'org.jetbrains.kotlin.plugin.jpa' version '1.4.32'
 ```
 
+  - Injeção de dependência: boa prática
+  
+    - Sempre declarar **private**: evitar que outras classes tenham acesso indevidamente
+```
+@Service
+class CustomerService(
+        private val customerRepository: CustomerRepository,
+        private val bookService: BookService,
+        private val bCrypt: BCryptPasswordEncoder
+```
   - Como sobrescrever um método set
   
     - BookModel.kt
