@@ -123,6 +123,8 @@ class CustomerService(
   - Spring Security
   
     - Ao adicionar a dependência do Spring Security todas as rotas ficarão "bloqueadas" - 401 Unauthorized
+    
+    - Spring cria uma rota POST /login
   
     - JWT (JSON Web Token)
     

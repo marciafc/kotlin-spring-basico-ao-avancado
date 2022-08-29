@@ -2,7 +2,7 @@ package br.com.marcia.mercadolivro.service
 
 import br.com.marcia.mercadolivro.enums.CustomerStatus
 import br.com.marcia.mercadolivro.enums.Errors
-import br.com.marcia.mercadolivro.enums.Profile
+import br.com.marcia.mercadolivro.enums.Role
 import br.com.marcia.mercadolivro.exception.NotFoundException
 import br.com.marcia.mercadolivro.model.CustomerModel
 import br.com.marcia.mercadolivro.repository.CustomerRepository
@@ -45,7 +45,7 @@ class CustomerService(
         // customer.copy -> Copiar o customer recebido como argumento para
         //  preenchê-lo com a role de CUSTOMER antes de salvar
         val customerCopy = customer.copy(
-                roles = setOf(Profile.CUSTOMER),
+                roles = setOf(Role.CUSTOMER),
                 password = bCrypt.encode(customer.password)
         )
         customerRepository.save(customerCopy)

@@ -1,8 +1,12 @@
 package br.com.marcia.mercadolivro.config
 
+import br.com.marcia.mercadolivro.repository.CustomerRepository
+import br.com.marcia.mercadolivro.security.AuthenticationFilter
+import br.com.marcia.mercadolivro.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -11,13 +15,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig : WebSecurityConfigurerAdapter() {
+class SecurityConfig(
+    private val customerRepository: CustomerRepository,
+    private val userDetails: UserDetailsCustomService
+
+) : WebSecurityConfigurerAdapter() {
 
     private val PUBLIC_MATCHERS = arrayOf<String>()
 
     private val PUBLIC_POST_MATCHERS = arrayOf(
             "/customers"
     )
+
+    override fun configure(auth: AuthenticationManagerBuilder) {
+
+        // userDetails \ loadUserByUsername \ UserCustomDetails -> verificações se pode autenticar
+        // passwordEncoder -> ensinar o Spring Security como encodar a senha para validar como está no banco (encodada)
+        auth.userDetailsService(userDetails).passwordEncoder(bCryptPasswordEncoder())
+    }
 
     override fun configure(http: HttpSecurity) {
 
@@ -32,6 +47,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 .antMatchers(*PUBLIC_MATCHERS).permitAll()
                 .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll()
                 .anyRequest().authenticated()
+
+        // Indicar ao Spring como realizar a autenticação
+        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository))
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
