@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
+import org.springframework.security.access.AccessDeniedException
 
 @ControllerAdvice
 class ControllerAdvice {
@@ -47,5 +48,21 @@ class ControllerAdvice {
         )
 
         return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY) // poderia ser BAD_REQUEST
+    }
+
+    // Tratando resposta de erro quando costumer tenta acessar recurso que não é seu
+    //   Ex.: GET /customers/1 mas está logado com customer_id = 16 e não é ADMIN
+    //   Cuidar para importar -> import org.springframework.security.access.AccessDeniedException
+    //   se não, não irá funcionar
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(ex: AccessDeniedException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
+                HttpStatus.FORBIDDEN.value(),
+                Errors.ML000.message,
+                Errors.ML000.code,
+                null
+        )
+
+        return ResponseEntity(erro, HttpStatus.FORBIDDEN)
     }
 }

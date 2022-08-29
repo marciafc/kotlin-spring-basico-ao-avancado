@@ -4,6 +4,7 @@ import br.com.marcia.mercadolivro.enums.Role
 import br.com.marcia.mercadolivro.repository.CustomerRepository
 import br.com.marcia.mercadolivro.security.AuthenticationFilter
 import br.com.marcia.mercadolivro.security.AuthorizationFilter
+import br.com.marcia.mercadolivro.security.CustomAuthenticationEntryPoint
 import br.com.marcia.mercadolivro.security.JwtUtil
 import br.com.marcia.mercadolivro.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
@@ -27,7 +28,8 @@ import org.springframework.web.filter.CorsFilter
 class SecurityConfig(
     private val customerRepository: CustomerRepository,
     private val userDetails: UserDetailsCustomService,
-    private val jwtUtil: JwtUtil
+    private val jwtUtil: JwtUtil,
+    private val customEntryPoint: CustomAuthenticationEntryPoint
 
 ) : WebSecurityConfigurerAdapter() {
 
@@ -73,6 +75,9 @@ class SecurityConfig(
         http.addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        // Customizando a resposta json quando ocorrer erro de autenticação
+        http.exceptionHandling().authenticationEntryPoint(customEntryPoint)
     }
 
     override fun configure(web: WebSecurity) {
