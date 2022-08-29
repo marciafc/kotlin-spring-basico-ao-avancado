@@ -8,7 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class UserCustomDetails(val customerModel: CustomerModel): UserDetails {
 
-    val id = customerModel.id
+    // Será utilizado no método 'successfulAuthentication' para gerar o token a ser adicionado no header
+    val id: Int = customerModel.id!!
 
     // Descrição das roles em Role.kt
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = customerModel.roles.map { SimpleGrantedAuthority(it.description) }.toMutableList()

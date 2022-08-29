@@ -2,6 +2,7 @@ package br.com.marcia.mercadolivro.config
 
 import br.com.marcia.mercadolivro.repository.CustomerRepository
 import br.com.marcia.mercadolivro.security.AuthenticationFilter
+import br.com.marcia.mercadolivro.security.JwtUtil
 import br.com.marcia.mercadolivro.service.UserDetailsCustomService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,7 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @EnableWebSecurity
 class SecurityConfig(
     private val customerRepository: CustomerRepository,
-    private val userDetails: UserDetailsCustomService
+    private val userDetails: UserDetailsCustomService,
+    private val jwtUtil: JwtUtil
 
 ) : WebSecurityConfigurerAdapter() {
 
@@ -49,7 +51,7 @@ class SecurityConfig(
                 .anyRequest().authenticated()
 
         // Indicar ao Spring como realizar a autenticação
-        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository))
+        http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }

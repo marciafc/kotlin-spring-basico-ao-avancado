@@ -128,7 +128,16 @@ class CustomerService(
   
     - JWT (JSON Web Token)
     
-    - [https://jwt.io](https://jwt.io/)
+      - [https://jwt.io](https://jwt.io/)
+      
+      - Dependência 'jwt gradle dependency' -> [https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt/0.9.1](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt/0.9.1)
+      
+      - Gerar jwt.secret do application.yml -> [https://www.uuidgenerator.net/](https://www.uuidgenerator.net/)
+      
+      - Validar token JWT
+        - Após chamar rota POST /login, copiar do header Authorization (exemplo Bearer eyJhbGciOiJIUzUx...)
+        - Colar no site https://jwt.io tudo sem 'Bearer ' e onde diz 'your-256-bit-secret' colar o jwt.secret do application.yml
+          - Se ok, irá mudar para 'Signature Verified'
     
     - sub: identificação do usuário, id por exemplo
     
