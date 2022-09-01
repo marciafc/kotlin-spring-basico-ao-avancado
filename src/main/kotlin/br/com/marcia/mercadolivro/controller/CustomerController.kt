@@ -16,7 +16,7 @@ import javax.validation.Valid
 @RequestMapping("customers")
 class CustomerController (
         // injeção de dependência
-        val customerService : CustomerService
+        private val customerService : CustomerService
 ) {
 
     // RequestParam OU QueryParameter

@@ -6,10 +6,12 @@ import br.com.marcia.mercadolivro.controller.request.PutBookRequest
 import br.com.marcia.mercadolivro.controller.request.PutCustomerRequest
 import br.com.marcia.mercadolivro.controller.response.BookResponse
 import br.com.marcia.mercadolivro.controller.response.CustomerResponse
+import br.com.marcia.mercadolivro.controller.response.PageResponse
 import br.com.marcia.mercadolivro.enums.BookStatus
 import br.com.marcia.mercadolivro.enums.CustomerStatus
 import br.com.marcia.mercadolivro.model.BookModel
 import br.com.marcia.mercadolivro.model.CustomerModel
+import org.springframework.data.domain.Page
 
 fun PostCustomerRequest.toCustomerModel(): CustomerModel {
     return CustomerModel(
@@ -68,5 +70,15 @@ fun BookModel.toResponse(): BookResponse {
             price = this.price,
             customer = this.customer,
             status = this.status
+    )
+}
+
+// Retornando apenas alguns campos da paginação
+fun <T> Page<T>.toPageResponse(): PageResponse<T> {
+    return PageResponse(
+            this.content,
+            this.number,
+            this.totalElements,
+            this.totalPages
     )
 }

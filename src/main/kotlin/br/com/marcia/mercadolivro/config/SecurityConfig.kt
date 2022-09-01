@@ -39,6 +39,10 @@ class SecurityConfig(
             "/customers"
     )
 
+    private val PUBLIC_GET_MATCHERS = arrayOf(
+            "/books"
+    )
+
     // Rotas que somente quem tem a role de ADMIN pode acessar
     private val ADMIN_MATCHERS = arrayOf(
             "/admin/**"
@@ -57,7 +61,7 @@ class SecurityConfig(
 
         // .anyRequest().authenticated() -> Qlq request tem que ser autenticada,
         // exceto a rota de POST /customers (criar customer) que está em PUBLIC_POST_MATCHERS
-        // e as rotas que estão em PUBLIC_MATCHERS.
+        // e as rotas que estão em PUBLIC_MATCHERS ou PUBLIC_GET_MATCHERS.
         // O asterisco em *PUBLIC_MATCHERS ou *PUBLIC_POST_MATCHERS transforma o array em várias Strings, separadas por vígula
         // Ex.: *PUBLIC_MATCHERS -> ["rota1", "rota2"] -> "rota1", "rota2"
         // Se quiser criar regra para SOMENTE quem tem role CUSTOMER acessar determinadas rotas:
@@ -65,8 +69,9 @@ class SecurityConfig(
         http.authorizeRequests()
                 .antMatchers(*PUBLIC_MATCHERS).permitAll()
                 .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll()
+                .antMatchers(HttpMethod.GET, *PUBLIC_GET_MATCHERS).permitAll()
                 .antMatchers(*ADMIN_MATCHERS).hasAuthority(Role.ADMIN.description) // rotas acessíveis para quem tem role ADMIN
-                .anyRequest().authenticated()
+                .anyRequest().authenticated()// devem ser autenticadas
 
         // Indicar ao Spring como realizar a autenticação
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
@@ -96,7 +101,7 @@ class SecurityConfig(
 
         // Permitindo tudo: credenciais, todas as origens, headers, métodos
         config.allowCredentials = true
-        config.addAllowedOrigin("*")
+        config.addAllowedOriginPattern("*")
         config.addAllowedHeader("*")
         config.addAllowedMethod("*")
 

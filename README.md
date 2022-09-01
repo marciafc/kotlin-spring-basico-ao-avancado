@@ -156,12 +156,58 @@ class CustomerService(
       - INSERT INTO mercadolivro.customer_roles(customer_id, `role`) VALUES(<INSERIR_ID>, 'CUSTOMER')
       - INSERT INTO mercadolivro.customer_roles(customer_id, `role`) VALUES(<INSERIR_ID>, 'ADMIN')
     
+  - Automatizações do **POSTMAN**
+  
+    - Criar ambiente "Local" e suas variáveis:
+          
+      - base_url  -> localhost:8080
+      - token     -> Bearer eyJhbGc...
+      
+    - Alterar todos endpoints para utilizar  o **Environment** "Local" e **{{base_url}}**
+      
+    - Criar automação para gerar o token e já preencher a respectiva variável 
+    
+      - No endpoint que realiza login **POST {{base_url}}/login** na aba **Tests** escrever script
+      ```
+      var token = pm.response.headers.get("Authorization")
+      pm.environment.set('token', token)
+      ```
+      - Alterar endpoints para usar a variável **{{token}}** no header **Authorization**    
+      
+        - Exemplo: 
         
-## Referências
+        ```
+        GET {{base_url}}/customers/16
+        
+        - Headers do request:
+        
+        key: Authorization, Value: {{token}}
+        ```
+      
+    - Quando for acessar um endpoint no POSTMAN, basta executar antes o endpoint de login, que ele já preencherá a var **{{token}}**
+    
+      - Após isso, chamar o endpoint que quer testar, não esquecendo de por no header da request **Authorization** com **{{token}}**                 
 
-  - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
+  - Customizando a paginação
+  
+    - PageResponse.kt
+    - fun <T> Page<T>.toPageResponse(): PageResponse<T> em **ConverterExtensionFunction.kt**
+    - BookController.kt
+    
+  - Configurar Profile
+  
+    - application.yml
+    - OU VM Options -> -Dspring.profiles.active=prod     
+  
+  - Configurar Swagger para não estar disponível em prod
+  
+    - SwaggerConfig.kt -> ```@Profile("!prod")```  
+    - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 
+  
 
 ## Leituras extras
+
+  - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
 
   - [Introduction to Kotlin Coroutines](https://www.baeldung.com/kotlin/coroutines)
   

@@ -3,11 +3,12 @@ package br.com.marcia.mercadolivro.controller
 import br.com.marcia.mercadolivro.controller.request.PostBookRequest
 import br.com.marcia.mercadolivro.controller.request.PutBookRequest
 import br.com.marcia.mercadolivro.controller.response.BookResponse
+import br.com.marcia.mercadolivro.controller.response.PageResponse
 import br.com.marcia.mercadolivro.extension.toBookModel
+import br.com.marcia.mercadolivro.extension.toPageResponse
 import br.com.marcia.mercadolivro.extension.toResponse
 import br.com.marcia.mercadolivro.service.BookService
 import br.com.marcia.mercadolivro.service.CustomerService
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
@@ -17,8 +18,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("books")
 class BookController(
-    val bookService: BookService,
-    val customerService: CustomerService
+    private val bookService: BookService,
+    private val customerService: CustomerService
 ) {
 
     @PostMapping
@@ -29,18 +30,18 @@ class BookController(
     }
 
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> {
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> {
 
         // .map { it.toResponse()  -> itera em todos os itens e converte em BookResponse,
         // usando o ConverterExtensionFunction.kt
-        return bookService.findAll(pageable).map { it.toResponse() }
+        return bookService.findAll(pageable).map { it.toResponse() }.toPageResponse()
     }
 
     // Quando tem só uma linha,
     // não precisa usar return, usa só símbolo de igual
     @GetMapping("/active")
-    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> =
-            bookService.findActives(pageable).map { it.toResponse() }
+    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> =
+            bookService.findActives(pageable).map { it.toResponse() }.toPageResponse()
 
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Int): BookResponse {
