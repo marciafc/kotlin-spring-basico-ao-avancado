@@ -201,7 +201,10 @@ class CustomerService(
   
   - Configurar Swagger para não estar disponível em prod
   
+    - [Artigo Spring Profiles](https://www.baeldung.com/spring-profiles)
+  
     - SwaggerConfig.kt -> ```@Profile("!prod")```  
+    
     - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 
   
 
