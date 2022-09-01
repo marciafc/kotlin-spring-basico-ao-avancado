@@ -255,6 +255,19 @@ class CustomerService(
       
       - [Unit Testing using mockK.io in Kotlin](https://codetoart.com/blog/unit-testing-using-mockk-io-in-kotlin)    
     
+    - Testando com profile de test
+    
+      - CustomerRepositoryTest.kt -> @ActiveProfiles("test")
+      
+        - @SpringBootTest
+        
+        - **Repository** não aparece no Jacoco, não é todo projeto que testa essa camada
+          - São interfaces
+        
+        - Irá usar o resources application-test.yml
+        
+        - @Nested + inner -> testes organizados    
+    
 ## Leituras extras
 
   - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
