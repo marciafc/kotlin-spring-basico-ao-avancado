@@ -223,6 +223,10 @@ class CustomerService(
       
   - Testes unitários
   
+    - [MockK - documentação](https://mockk.io): mocking library for Kotlin
+    
+    - [MockK: A Mocking Library for Kotlin](https://www.baeldung.com/kotlin/mockk)
+  
     - Retorno método void
       - just runs
   
@@ -231,6 +235,13 @@ class CustomerService(
       - ERRO: no answer found for: Optional(child of customerRepository...).orElseThrow(br.com.marcia.mercadolivro.service.CustomerService$findById$...)
       - Necessário usar **@SpyK** no inject mock **@InjectMockKs customerService** para testar método do próprio service, no caso findById(id)     
 
+    - Slot
+    
+      - PurchaseServiceTest.kt
+      
+      - [Capturing Parameters](https://www.baeldung.com/kotlin/mockk#capturing)
+    
+    
 ## Leituras extras
 
   - [Tipos básicos do Kotlin](https://kotlinlang.org/docs/basic-types.html)
