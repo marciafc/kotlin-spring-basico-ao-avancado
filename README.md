@@ -240,7 +240,20 @@ class CustomerService(
       - PurchaseServiceTest.kt
       
       - [Capturing Parameters](https://www.baeldung.com/kotlin/mockk#capturing)
+      
+    - Mock estático 
     
+      - GenerateNfeListenerTest.kt
+      - Mockando o método estático do UUID para retornar um valor específico
+      
+      ```
+      mockkStatic(UUID::class)
+      every { UUID.randomUUID() } returns fakeNfe
+      ```
+      
+      - [Mock singleton objects and static methods](https://notwoods.github.io/mockk-guidebook/docs/mocking/static/)  
+      
+      - [Unit Testing using mockK.io in Kotlin](https://codetoart.com/blog/unit-testing-using-mockk-io-in-kotlin)    
     
 ## Leituras extras
 
