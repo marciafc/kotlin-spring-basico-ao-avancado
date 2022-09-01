@@ -267,6 +267,10 @@ class CustomerService(
         - Irá usar o resources application-test.yml
         
         - @Nested + inner -> testes organizados    
+        
+  - Testes de integração
+  
+    - CustomerControllerTest.kt        
     
 ## Leituras extras
 
