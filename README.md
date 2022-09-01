@@ -206,7 +206,20 @@ class CustomerService(
     - SwaggerConfig.kt -> ```@Profile("!prod")```  
     
     - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 
+
+  -  Jacoco: cobertura dos testes
   
+    - Incluir plugin no build.gradle
+    
+    - Executar Tasks do Gradle:
+    
+      - verification \ check
+      - verification \ jacocoTestCoverageVerification
+      - verification \ jacocoTestReport
+      
+    - Abrir no navegador o report
+    
+      - build/reports/jacoco/test/html/index.html      
 
 ## Leituras extras
 
