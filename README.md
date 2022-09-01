@@ -219,7 +219,17 @@ class CustomerService(
       
     - Abrir no navegador o report
     
-      - build/reports/jacoco/test/html/index.html      
+      - build/reports/jacoco/test/html/index.html    
+      
+  - Testes unitários
+  
+    - Retorno método void
+      - just runs
+  
+    - CustomerServiceTest -> `should delete customer`
+    
+      - ERRO: no answer found for: Optional(child of customerRepository...).orElseThrow(br.com.marcia.mercadolivro.service.CustomerService$findById$...)
+      - Necessário usar **@SpyK** no inject mock **@InjectMockKs customerService** para testar método do próprio service, no caso findById(id)     
 
 ## Leituras extras
 
